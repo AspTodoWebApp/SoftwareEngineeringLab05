@@ -101,17 +101,23 @@ namespace SELab5.Controllers
         // GET: Person/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Person showTo = _db.People.Find(id);
+            return View(showTo);
         }
 
         // POST: Person/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Person getperson)
         {
             try
             {
                 // TODO: Add delete logic here
-
+             Person deletePerson = _db.People.Find(id);
+                List<Contact> deletePersonContacts = _db.Contacts.Where(contact => contact.PersonId == id).ToList();
+                _db.Contacts.RemoveRange(deletePersonContacts);
+                _db.SaveChanges();
+                _db.People.Remove(deletePerson);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
