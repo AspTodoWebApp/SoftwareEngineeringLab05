@@ -32,7 +32,14 @@ namespace SELab5.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Person person = new Person();
+            List<Contact> lstContact = new List<Contact>();
+            PersonDetail personDetail = new PersonDetail();
+            person= _db.People.Find(id);
+            lstContact = _db.Contacts.Where(contact => contact.PersonId == id).ToList();
+            personDetail.person = person;
+            personDetail.listContact = lstContact;
+            return View(personDetail);
         }
 
         [Authorize]

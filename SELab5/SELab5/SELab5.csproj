@@ -197,6 +197,7 @@
     <Compile Include="Models\Person.cs">
       <DependentUpon>PhoneBookDbEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonDetail.cs" />
     <Compile Include="Models\PhoneBookDbEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
