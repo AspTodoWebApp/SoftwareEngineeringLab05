@@ -25,7 +25,7 @@ namespace SELab5.Controllers
             string login = User.Identity.GetUserId();
 
             List<Person> personList = new List<Person>();
-            personList=_db.People.Where(person => person.AddedBy == login).ToList();
+              personList=_db.People.Where(person => person.AddedBy == login).ToList();
             return View(personList);
         }
 
@@ -79,15 +79,29 @@ namespace SELab5.Controllers
         // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Person editPerson = _db.People.Find(id);
+            return View(editPerson);
         }
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Person getPerson)
         {
             try
             {
+                Person updatedPerson = _db.People.Find(id);
+                updatedPerson.FirstName = getPerson.FirstName;
+                updatedPerson.MiddleName = getPerson.MiddleName;
+                updatedPerson.LastName = getPerson.LastName;
+                updatedPerson.DateOfBirth = getPerson.DateOfBirth;
+                updatedPerson.HomeAddress = getPerson.HomeAddress;
+                updatedPerson.HomeCity = getPerson.HomeCity;
+                updatedPerson.FaceBookAccountId = getPerson.FaceBookAccountId;
+                updatedPerson.TwitterId = getPerson.TwitterId;
+                updatedPerson.EmailId = getPerson.EmailId;
+                updatedPerson.UpdateOn = DateTime.Now;
+                _db.SaveChanges();
+
                 // TODO: Add update logic here
 
                 return RedirectToAction("Index");
